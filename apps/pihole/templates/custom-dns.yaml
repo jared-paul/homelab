@@ -4,7 +4,7 @@ metadata:
   name: pihole-custom-dns
   namespace: pihole
 data:
-  02-custom-dns.conf: |
-    address=/argocd.cereal.box/192.168.0.19
-    address=/pihole.cereal.box/192.168.0.19
-    address=/kargo.cereal.box/192.168.0.19
+  custom.list: |
+    192.168.0.19 argocd.cereal.box
+    192.168.0.19 pihole.cereal.box
+    192.168.0.19 kargo.cereal.box

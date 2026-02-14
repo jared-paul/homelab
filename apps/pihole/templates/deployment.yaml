@@ -28,25 +28,20 @@ spec:
               name: dns-udp
               protocol: UDP
           env:
-            - name: WEBPASSWORD
+            - name: FTLCONF_webserver_api_password
               value: {{ .Values.password | quote }}
             - name: TZ
               value: "America/Vancouver"
           volumeMounts:
             - name: pihole-data
               mountPath: /etc/pihole
-            - name: dnsmasq-data
-              mountPath: /etc/dnsmasq.d
             - name: custom-dns
-              mountPath: /etc/dnsmasq.d/02-custom-dns.conf
-              subPath: 02-custom-dns.conf
+              mountPath: /etc/pihole/hosts/custom.list
+              subPath: custom.list
       volumes:
         - name: pihole-data
           persistentVolumeClaim:
             claimName: pihole-data
-        - name: dnsmasq-data
-          persistentVolumeClaim:
-            claimName: dnsmasq-data
         - name: custom-dns
           configMap:
             name: pihole-custom-dns
