@@ -19,7 +19,6 @@ metadata:
 spec:
   type: LoadBalancer
   loadBalancerIP: {{ .Values.nodeIP }}
-  externalTrafficPolicy: Local
   selector:
     app: pihole
   ports:
