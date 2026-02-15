@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: kargo-ingress
   namespace: kargo
+annotations:
+  traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   rules:
     - host: {{ .Values.host }}
@@ -14,4 +16,4 @@ spec:
               service:
                 name: kargo-api
                 port:
-                  number: 80
+                  number: 443
