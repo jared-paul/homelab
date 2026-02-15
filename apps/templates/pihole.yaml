@@ -23,9 +23,9 @@ spec:
         persistentVolumeClaim:
           enabled: true
           size: "1Gi"
+        adminPassword: "changeme"
         extraEnvVars:
           TZ: "America/Vancouver"
-          FTLCONF_webserver_api_password: "changeme"
         dnsmasq:
           customDnsEntries:
             - address=/argocd.cereal.box/192.168.0.19
