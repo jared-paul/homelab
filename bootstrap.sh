@@ -12,14 +12,14 @@ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 echo "==> Waiting for K3s to be ready..."
 kubectl wait --for=condition=Ready node --all --timeout=120s
 
-# Install Argo CD
-echo "==> Installing Argo CD..."
+# Install Argo CD via Helm (matches the argo-cd chart used by the argocd app)
+echo "==> Installing Argo CD via Helm..."
 kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-kubectl apply -n argocd --server-side --force-conflicts \
-  -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-echo "==> Waiting for Argo CD to be ready..."
-kubectl -n argocd wait --for=condition=available deployment/argocd-server --timeout=300s
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+helm install argocd argo/argo-cd --namespace argocd --version 9.4.2 \
+  --set configs.params."server\.insecure"=true \
+  --wait --timeout 300s
 
 # Point Argo CD at the homelab repo
 echo "==> Creating root application..."
@@ -46,7 +46,9 @@ EOF
 echo ""
 echo "==> Bootstrap complete!"
 echo "==> Argo CD admin password:"
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl -n argocd get secret argocd-secret -o jsonpath="{.data.clearPassword}" | base64 -d 2>/dev/null \
+  || kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d 2>/dev/null \
+  || echo "(password not found — set one manually)"
 echo ""
 echo ""
 echo "==> Argo CD will now sync all apps from Git."
