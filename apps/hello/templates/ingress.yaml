@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hello-ingress
-  namespace: hello
+  namespace: {{ .Release.Namespace }}
 spec:
   rules:
     - host: {{ .Values.host }}

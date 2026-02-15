@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hello
+  name: hello-staging
   namespace: argocd
+  annotations:
+    kargo.akuity.io/authorized-stage: hello:staging
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -11,9 +13,13 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     path: apps/hello
+    helm:
+      parameters:
+        - name: host
+          value: hello-staging.cereal.box
   destination:
     server: https://kubernetes.default.svc
-    namespace: hello
+    namespace: hello-staging
   syncPolicy:
     automated:
       selfHeal: true

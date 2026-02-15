@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-production
+  namespace: argocd
+  annotations:
+    kargo.akuity.io/authorized-stage: hello:production
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    path: apps/hello
+    helm:
+      parameters:
+        - name: host
+          value: hello.cereal.box
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hello-production
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

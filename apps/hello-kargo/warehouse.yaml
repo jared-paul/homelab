@@ -1,0 +1,9 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: hello
+  namespace: hello
+spec:
+  subscriptions:
+    - image:
+        repoURL: ghcr.io/jared-paul/hello
