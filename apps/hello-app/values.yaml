@@ -1,0 +1,4 @@
+image:
+  repository: ghcr.io/jared-paul/hello-app
+  tag: latest
+host: hello.cereal.box

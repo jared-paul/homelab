@@ -1,0 +1,4 @@
+apiVersion: v2
+name: hello-app
+description: Hello app deployment
+version: 0.1.0
