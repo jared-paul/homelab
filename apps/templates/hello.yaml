@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hello-app
+  name: hello
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
-    path: apps/hello-app
+    path: apps/hello
   destination:
     server: https://kubernetes.default.svc
-    namespace: hello-app
+    namespace: hello
   syncPolicy:
     automated:
       selfHeal: true
