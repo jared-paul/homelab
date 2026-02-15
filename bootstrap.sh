@@ -9,6 +9,8 @@ echo "==> Installing K3s..."
 curl -sfL https://get.k3s.io | sh -
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
 echo "==> Waiting for K3s to be ready..."
 sleep 10
 kubectl wait --for=condition=Ready node --all --timeout=120s
