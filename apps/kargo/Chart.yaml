@@ -1,4 +1,0 @@
-apiVersion: v2
-name: kargo-ingress
-description: Kargo ingress configuration
-version: 0.1.0

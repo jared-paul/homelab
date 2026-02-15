@@ -22,10 +22,9 @@ spec:
             enabled: true
             ingressClassName: traefik
             tls:
-              enabled: false
+              enabled: true
           tls:
-            enabled: true
-            terminatedUpstream: true
+            enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: kargo
