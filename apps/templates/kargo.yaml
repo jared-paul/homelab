@@ -17,8 +17,15 @@ spec:
           adminAccount:
             passwordHash: "$2y$10$gGvAeQO34xLM1PApjVOisenhMweJ2nAvspKxboy7V4RlgXynvXhI6"
             tokenSigningKey: "lqHBhSD1czgMzZsZu4CqdMj0iCkiRiwi"
-          service:
-            type: ClusterIP
+          host: kargo.cereal.box
+          ingress:
+            enabled: true
+            ingressClassName: traefik
+            tls:
+              enabled: false
+          tls:
+            enabled: true
+            terminatedUpstream: true
   destination:
     server: https://kubernetes.default.svc
     namespace: kargo
