@@ -19,3 +19,9 @@ spec:
             apps:
               - name: hello-production
                 namespace: argocd
+                sources:
+                  - repoURL: https://github.com/jared-paul/homelab.git
+                    helm:
+                      images:
+                        - key: image.tag
+                          value: ${{ imageFrom("ghcr.io/jared-paul/hello").Tag }}
