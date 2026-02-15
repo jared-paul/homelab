@@ -12,6 +12,10 @@ sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 echo "==> Waiting for K3s to be ready..."
 kubectl wait --for=condition=Ready node --all --timeout=120s
 
+# Install Helm
+echo "==> Installing Helm..."
+curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
 # Install Argo CD via Helm (matches the argo-cd chart used by the argocd app)
 echo "==> Installing Argo CD via Helm..."
 kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
