@@ -8,9 +8,19 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
-    path: apps/argocd
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-cd
+    targetRevision: 9.4.2
+    helm:
+      values: |
+        configs:
+          params:
+            server.insecure: true
+        server:
+          ingress:
+            enabled: true
+            hostname: argocd.cereal.box
+            ingressClassName: traefik
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -18,3 +28,5 @@ spec:
     automated:
       selfHeal: true
       prune: true
+    syncOptions:
+      - ServerSideApply=true
