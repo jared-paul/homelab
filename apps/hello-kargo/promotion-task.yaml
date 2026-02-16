@@ -27,8 +27,7 @@ spec:
       as: commit
       config:
         path: ./repo
-        messageFromSteps:
-          - update
+        message: ${{ task.outputs.update.commitMessage }}
     - uses: git-push
       config:
         path: ./repo

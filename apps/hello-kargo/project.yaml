@@ -2,6 +2,12 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Project
 metadata:
   name: hello
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: ProjectConfig
+metadata:
+  name: hello
+  namespace: hello
 spec:
   promotionPolicies:
     - stage: staging
