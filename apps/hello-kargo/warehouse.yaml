@@ -10,6 +10,5 @@ spec:
     - image:
         repoURL: ghcr.io/jared-paul/hello
         imageSelectionStrategy: SemVer
-        semverConstraint: "*"
-        strictSemvers: true
+        constraint: "*"
         discoveryLimit: 20
