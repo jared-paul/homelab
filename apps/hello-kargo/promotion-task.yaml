@@ -35,6 +35,3 @@ spec:
       config:
         apps:
           - name: hello-${{ ctx.stage }}
-            sources:
-              - repoURL: ${{ vars.gitopsRepo }}
-                desiredRevision: ${{ task.outputs.commit.commit }}
