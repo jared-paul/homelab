@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: {{ .Release.Namespace }}
+data:
+  settings.yaml: |
+    title: Homelab Dashboard
+    background:
+      image: ""
+    layout:
+      Services:
+        style: row
+        columns: 3
+      Bookmarks:
+        style: row
+        columns: 2
+
+  bookmarks.yaml: |
+    - Bookmarks:
+        - Hello Production:
+            - href: http://hello.cereal.box
+              icon: mdi-hand-wave
+        - Hello Staging:
+            - href: http://hello-staging.cereal.box
+              icon: mdi-hand-wave-outline
+
+  services.yaml: |
+    - Services:
+        - ArgoCD:
+            href: http://argocd.cereal.box
+            icon: argocd
+            description: GitOps continuous delivery
+        - Pi-hole:
+            href: http://pihole.cereal.box/admin
+            icon: pi-hole
+            description: DNS ad blocker
+        - Kargo:
+            href: http://kargo.cereal.box
+            icon: mdi-train-car-container
+            description: Promotion engine for Kubernetes
+
+  widgets.yaml: |
+    - search:
+        provider: google
+        target: _blank

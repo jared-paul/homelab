@@ -1,0 +1,4 @@
+apiVersion: v2
+name: homepage
+description: Homepage dashboard for homelab
+version: 0.1.0

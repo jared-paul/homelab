@@ -33,6 +33,7 @@ spec:
             - address=/kargo.cereal.box/192.168.0.19
             - address=/hello.cereal.box/192.168.0.19
             - address=/hello-staging.cereal.box/192.168.0.19
+            - address=/homepage.cereal.box/192.168.0.19
   destination:
     server: https://kubernetes.default.svc
     namespace: pihole
