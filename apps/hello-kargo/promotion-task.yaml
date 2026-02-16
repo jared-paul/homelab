@@ -38,4 +38,4 @@ spec:
           - name: hello-${{ ctx.stage }}
             sources:
               - repoURL: ${{ vars.gitopsRepo }}
-                desiredRevision: ${{ outputs.commit.commit }}
+                desiredRevision: ${{ task.outputs.commit.commit }}
