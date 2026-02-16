@@ -14,6 +14,8 @@ spec:
     targetRevision: {{ .Values.targetRevision }}
     path: apps/hello
     helm:
+      valueFiles:
+        - values-staging.yaml
       parameters:
         - name: host
           value: hello-staging.cereal.box

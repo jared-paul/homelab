@@ -13,14 +13,6 @@ spec:
   promotionTemplate:
     spec:
       steps:
-        - uses: argocd-update
-          config:
-            apps:
-              - name: hello-staging
-                namespace: argocd
-                sources:
-                  - repoURL: https://github.com/jared-paul/homelab.git
-                    helm:
-                      images:
-                        - key: image.tag
-                          value: ${{ imageFrom("ghcr.io/jared-paul/hello").Tag }}
+        - task:
+            name: hello-promote
+          as: promo
