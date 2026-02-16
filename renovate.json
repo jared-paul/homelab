@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "argocd": {
+    "fileMatch": ["apps/templates/.+\\.yaml$"]
+  },
+  "ignorePaths": [
+    "apps/hello-kargo/**",
+    "apps/hello/values-staging.yaml",
+    "apps/hello/values-production.yaml"
+  ],
+  "packageRules": [
+    {
+      "description": "Auto-merge minor and patch updates for external tools",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Require manual review for major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}
