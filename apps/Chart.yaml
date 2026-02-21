@@ -1,4 +1,0 @@
-apiVersion: v2
-name: apps
-description: Root app-of-apps for homelab
-version: 0.1.0

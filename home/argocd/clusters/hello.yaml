@@ -1,0 +1,7 @@
+# Placeholder — replace with a SealedSecret containing the hello cluster kubeconfig
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: hello-cluster
+  namespace: argocd
+spec: {}

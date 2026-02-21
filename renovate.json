@@ -2,12 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
   "argocd": {
-    "fileMatch": ["apps/templates/.+\\.yaml$"]
+    "fileMatch": [
+      "home/argocd/app-of-apps/.+\\.yaml$",
+      "apps/.+/argocd/.+\\.yaml$"
+    ]
   },
   "ignorePaths": [
-    "apps/hello-kargo/**",
-    "apps/hello/values-staging.yaml",
-    "apps/hello/values-production.yaml"
+    "apps/hello/kargo/**",
+    "apps/hello/values/**"
   ],
   "packageRules": [
     {

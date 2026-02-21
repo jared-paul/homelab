@@ -1,0 +1,5 @@
+---
+- name: Bootstrap hello cluster
+  hosts: hello
+  become: true
+  tasks: []

@@ -1,0 +1,46 @@
+---
+- name: Bootstrap home node
+  hosts: home
+  become: true
+  tasks:
+    - name: Install K3s
+      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
+      args:
+        creates: /usr/local/bin/k3s
+
+    - name: Wait for K3s to be ready
+      ansible.builtin.command: kubectl wait --for=condition=Ready node --all --timeout=120s
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Install Helm
+      ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      args:
+        creates: /usr/local/bin/helm
+
+    - name: Create argocd namespace
+      ansible.builtin.command: kubectl create namespace argocd --dry-run=client -o yaml
+      register: ns_yaml
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Apply argocd namespace
+      ansible.builtin.shell: echo '{{ ns_yaml.stdout }}' | kubectl apply -f -
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Install Argo CD via Helm
+      ansible.builtin.shell: |
+        helm repo add argo https://argoproj.github.io/argo-helm
+        helm repo update
+        helm install argocd argo/argo-cd --namespace argocd \
+          --version 9.4.2 \
+          -f /home/cereal/homelab/home/argocd/install/values.yaml \
+          --wait --timeout 300s
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Apply app-of-apps root application
+      ansible.builtin.command: kubectl apply -f /home/cereal/homelab/home/argocd/app-of-apps/main.yaml
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml

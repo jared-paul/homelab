@@ -10,9 +10,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
-    path: apps/hello-kargo
+    repoURL: https://github.com/jared-paul/homelab.git
+    targetRevision: main
+    path: apps/hello/kargo
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:

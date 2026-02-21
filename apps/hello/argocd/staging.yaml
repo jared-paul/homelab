@@ -11,16 +11,19 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
-    path: apps/hello
-    helm:
-      valueFiles:
-        - values-staging.yaml
-      parameters:
-        - name: host
-          value: hello-staging.cereal.box
+  sources:
+    - repoURL: https://github.com/jared-paul/homelab.git
+      targetRevision: main
+      ref: values
+    - repoURL: https://github.com/jared-paul/homelab.git
+      targetRevision: main
+      path: apps/hello/chart
+      helm:
+        valueFiles:
+          - $values/apps/hello/values/staging.yaml
+        parameters:
+          - name: host
+            value: hello-staging.cereal.box
   destination:
     server: https://kubernetes.default.svc
     namespace: hello-staging

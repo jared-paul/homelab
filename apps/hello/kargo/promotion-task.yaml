@@ -19,7 +19,7 @@ spec:
     - uses: yaml-update
       as: update
       config:
-        path: ./repo/apps/hello/values-${{ ctx.stage }}.yaml
+        path: ./repo/apps/hello/values/${{ ctx.stage }}.yaml
         updates:
           - key: image.tag
             value: ${{ imageFrom(vars.imageRepo).Tag }}
