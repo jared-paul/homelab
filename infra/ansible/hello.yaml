@@ -2,4 +2,18 @@
 - name: Bootstrap hello cluster
   hosts: hello
   become: true
-  tasks: []
+  tasks:
+    - name: Install K3s
+      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
+      args:
+        creates: /usr/local/bin/k3s
+
+    - name: Wait for K3s to be ready
+      ansible.builtin.command: kubectl wait --for=condition=Ready node --all --timeout=120s
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Install Helm
+      ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      args:
+        creates: /usr/local/bin/helm
