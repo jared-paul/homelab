@@ -11,11 +11,13 @@ provider "proxmox" {
   endpoint = var.proxmox_endpoint
   insecure = true
 
-  # Authenticate via environment variables:
-  #   PROXMOX_VE_USERNAME  (e.g. root@pam)
-  #   PROXMOX_VE_PASSWORD
-  # or
-  #   PROXMOX_VE_API_TOKEN
+  # API auth via environment variables:
+  #   PROXMOX_VE_API_TOKEN='root@pam!opentofu=<secret>'
+
+  ssh {
+    agent    = true
+    username = "root"
+  }
 }
 
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
