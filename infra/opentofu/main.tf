@@ -28,6 +28,25 @@ resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
   file_name    = "ubuntu-24.04-server-cloudimg-amd64.img"
 }
 
+resource "proxmox_virtual_environment_file" "cloud_init" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = var.node_name
+
+  source_raw {
+    data = <<-EOF
+      #cloud-config
+      package_update: true
+      packages:
+        - qemu-guest-agent
+      runcmd:
+        - systemctl enable --now qemu-guest-agent
+    EOF
+
+    file_name = "cloud-init-vm.yaml"
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "cluster" {
   for_each = var.vms
 
@@ -70,6 +89,8 @@ resource "proxmox_virtual_environment_vm" "cluster" {
       username = var.username
       keys     = [trimspace(file(pathexpand(var.ssh_public_key_file)))]
     }
+
+    user_data_file_id = proxmox_virtual_environment_file.cloud_init.id
   }
 
   operating_system {
