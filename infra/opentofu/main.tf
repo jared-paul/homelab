@@ -34,14 +34,10 @@ resource "proxmox_virtual_environment_file" "cloud_init" {
   node_name    = var.node_name
 
   source_raw {
-    data = <<-EOF
-      #cloud-config
-      package_update: true
-      packages:
-        - qemu-guest-agent
-      runcmd:
-        - systemctl enable --now qemu-guest-agent
-    EOF
+    data = templatefile("${path.module}/cloud-init.yaml.tftpl", {
+      username       = var.username
+      ssh_public_key = trimspace(file(pathexpand(var.ssh_public_key_file)))
+    })
 
     file_name = "cloud-init-vm.yaml"
   }
@@ -83,11 +79,6 @@ resource "proxmox_virtual_environment_vm" "cluster" {
         address = "${each.value.ip_address}/${var.cidr}"
         gateway = var.gateway
       }
-    }
-
-    user_account {
-      username = var.username
-      keys     = [trimspace(file(pathexpand(var.ssh_public_key_file)))]
     }
 
     user_data_file_id = proxmox_virtual_environment_file.cloud_init.id
