@@ -8,9 +8,63 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/jared-paul/homelab.git
-    targetRevision: main
-    path: home/homepage
+    repoURL: https://jameswynn.github.io/helm-charts
+    chart: homepage
+    targetRevision: 2.1.0
+    helm:
+      values: |
+        image:
+          repository: ghcr.io/gethomepage/homepage
+          tag: latest
+        ingress:
+          main:
+            enabled: true
+            hosts:
+              - host: homepage.cereal.box
+                paths:
+                  - path: /
+                    pathType: Prefix
+        env:
+          - name: HOMEPAGE_ALLOWED_HOSTS
+            value: homepage.cereal.box
+        config:
+          bookmarks:
+            - Bookmarks:
+                - Hello Production:
+                    - href: http://hello.cereal.box
+                      icon: mdi-hand-wave
+                - Hello Staging:
+                    - href: http://hello-staging.cereal.box
+                      icon: mdi-hand-wave-outline
+          services:
+            - Services:
+                - ArgoCD:
+                    href: http://argocd.cereal.box
+                    icon: argocd
+                    description: GitOps continuous delivery
+                - Pi-hole:
+                    href: http://pihole.cereal.box/admin
+                    icon: pi-hole
+                    description: DNS ad blocker
+                - Kargo:
+                    href: http://kargo.cereal.box
+                    icon: mdi-train-car-container
+                    description: Promotion engine for Kubernetes
+          widgets:
+            - search:
+                provider: google
+                target: _blank
+          settings:
+            title: Homelab Dashboard
+            background:
+              image: ""
+            layout:
+              Services:
+                style: row
+                columns: 3
+              Bookmarks:
+                style: row
+                columns: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: homepage
