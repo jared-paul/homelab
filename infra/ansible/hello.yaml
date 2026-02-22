@@ -55,3 +55,63 @@
       ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       args:
         creates: /usr/local/bin/helm
+
+    - name: Create argocd-manager ServiceAccount
+      ansible.builtin.shell: |
+        kubectl apply -f - <<'EOF'
+        apiVersion: v1
+        kind: ServiceAccount
+        metadata:
+          name: argocd-manager
+          namespace: kube-system
+        EOF
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Create argocd-manager ClusterRoleBinding
+      ansible.builtin.shell: |
+        kubectl apply -f - <<'EOF'
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          name: argocd-manager
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: cluster-admin
+        subjects:
+          - kind: ServiceAccount
+            name: argocd-manager
+            namespace: kube-system
+        EOF
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Create argocd-manager long-lived token Secret
+      ansible.builtin.shell: |
+        kubectl apply -f - <<'EOF'
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: argocd-manager-token
+          namespace: kube-system
+          annotations:
+            kubernetes.io/service-account.name: argocd-manager
+        type: kubernetes.io/service-account-token
+        EOF
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+    - name: Wait for token to be populated
+      ansible.builtin.shell: |
+        kubectl -n kube-system get secret argocd-manager-token -o jsonpath='{.data.token}' | base64 -d
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+      register: argocd_token
+      until: argocd_token.stdout | length > 0
+      retries: 5
+      delay: 2
+
+    - name: Display argocd-manager token
+      ansible.builtin.debug:
+        msg: "ArgoCD manager token: {{ argocd_token.stdout }}"

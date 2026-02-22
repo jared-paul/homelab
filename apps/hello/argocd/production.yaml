@@ -25,7 +25,7 @@ spec:
           - name: host
             value: hello.cereal.box
   destination:
-    server: https://kubernetes.default.svc
+    server: https://192.168.0.201:6443
     namespace: hello-production
   syncPolicy:
     automated:

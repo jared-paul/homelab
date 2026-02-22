@@ -16,11 +16,49 @@ spec:
         configs:
           params:
             server.insecure: true
+          cm:
+            kustomize.buildOptions: "--enable-alpha-plugins --enable-exec"
         server:
           ingress:
             enabled: true
             hostname: argocd.cereal.box
             ingressClassName: traefik
+        repoServer:
+          env:
+            - name: SOPS_AGE_KEY_FILE
+              value: /home/argocd/.config/sops/age/key.txt
+            - name: XDG_CONFIG_HOME
+              value: /home/argocd/.config
+          volumes:
+            - name: age-key
+              secret:
+                secretName: helm-secrets-private-keys
+            - name: custom-tools
+              emptyDir: {}
+          volumeMounts:
+            - name: age-key
+              mountPath: /home/argocd/.config/sops/age/key.txt
+              subPath: key.txt
+            - name: custom-tools
+              mountPath: /usr/local/bin/sops
+              subPath: sops
+            - name: custom-tools
+              mountPath: /home/argocd/.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+              subPath: ksops
+          initContainers:
+            - name: install-ksops
+              image: alpine:3.19
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -e
+                  wget -qO /custom-tools/sops https://github.com/getsops/sops/releases/download/v3.9.4/sops-v3.9.4.linux.amd64
+                  chmod +x /custom-tools/sops
+                  wget -qO- https://github.com/viaduct-ai/kustomize-sops/releases/download/v4.3.2/ksops_4.3.2_Linux_x86_64.tar.gz | tar xz -C /custom-tools
+                  chmod +x /custom-tools/ksops
+              volumeMounts:
+                - name: custom-tools
+                  mountPath: /custom-tools
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
