@@ -29,18 +29,28 @@
       environment:
         KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
+    - name: Copy ArgoCD values file
+      ansible.builtin.copy:
+        src: ../../home/argocd/install/values.yaml
+        dest: /tmp/argocd-values.yaml
+
     - name: Install Argo CD via Helm
       ansible.builtin.shell: |
         helm repo add argo https://argoproj.github.io/argo-helm
         helm repo update
         helm install argocd argo/argo-cd --namespace argocd \
           --version 9.4.2 \
-          -f /home/cereal/homelab/home/argocd/install/values.yaml \
+          -f /tmp/argocd-values.yaml \
           --wait --timeout 300s
       environment:
         KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
+    - name: Copy app-of-apps manifest
+      ansible.builtin.copy:
+        src: ../../home/argocd/app-of-apps/main.yaml
+        dest: /tmp/argocd-app-of-apps.yaml
+
     - name: Apply app-of-apps root application
-      ansible.builtin.command: kubectl apply -f /home/cereal/homelab/home/argocd/app-of-apps/main.yaml
+      ansible.builtin.command: kubectl apply -f /tmp/argocd-app-of-apps.yaml
       environment:
         KUBECONFIG: /etc/rancher/k3s/k3s.yaml
