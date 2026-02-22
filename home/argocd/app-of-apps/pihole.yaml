@@ -23,7 +23,8 @@ spec:
         persistentVolumeClaim:
           enabled: true
           size: "1Gi"
-        adminPassword: "changeme"
+        admin:
+          existingSecret: "pihole-admin"
         extraEnvVars:
           TZ: "America/Vancouver"
         dnsmasq:

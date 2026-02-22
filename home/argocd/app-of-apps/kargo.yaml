@@ -15,8 +15,9 @@ spec:
       values: |
         api:
           adminAccount:
-            passwordHash: "$2y$10$Jtu/80Kxp7Y9lWuSavIL2OUF4PF1yq.xH8UPtgHu9n3mJLPHNeOCC"
-            tokenSigningKey: "lqHBhSD1czgMzZsZu4CqdMj0iCkiRiwi"
+            enabled: true
+          secret:
+            name: kargo-admin
           host: kargo.cereal.box
           ingress:
             enabled: true
