@@ -12,6 +12,25 @@
         path: /etc/hosts
         line: "127.0.1.1 {{ inventory_hostname }}"
 
+    - name: Disable systemd-resolved stub listener
+      ansible.builtin.copy:
+        content: |
+          [Resolve]
+          DNSStubListener=no
+        dest: /etc/systemd/resolved.conf.d/nostub.conf
+
+    - name: Point resolv.conf to real resolv.conf
+      ansible.builtin.file:
+        src: /run/systemd/resolve/resolv.conf
+        dest: /etc/resolv.conf
+        state: link
+        force: true
+
+    - name: Restart systemd-resolved
+      ansible.builtin.systemd:
+        name: systemd-resolved
+        state: restarted
+
     - name: Install K3s
       ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--resolv-conf /run/systemd/resolve/resolv.conf" sh -
       args:
