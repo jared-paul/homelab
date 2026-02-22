@@ -15,7 +15,7 @@ spec:
       values: |
         serviceDns:
           type: LoadBalancer
-          loadBalancerIP: "192.168.0.19"
+          loadBalancerIP: "192.168.0.200"
         ingress:
           enabled: true
           hosts:
@@ -28,12 +28,12 @@ spec:
           TZ: "America/Vancouver"
         dnsmasq:
           customDnsEntries:
-            - address=/argocd.cereal.box/192.168.0.19
-            - address=/pihole.cereal.box/192.168.0.19
-            - address=/kargo.cereal.box/192.168.0.19
-            - address=/hello.cereal.box/192.168.0.19
-            - address=/hello-staging.cereal.box/192.168.0.19
-            - address=/homepage.cereal.box/192.168.0.19
+            - address=/argocd.cereal.box/192.168.0.200
+            - address=/pihole.cereal.box/192.168.0.200
+            - address=/kargo.cereal.box/192.168.0.200
+            - address=/hello.cereal.box/192.168.0.200
+            - address=/hello-staging.cereal.box/192.168.0.200
+            - address=/homepage.cereal.box/192.168.0.200
   destination:
     server: https://kubernetes.default.svc
     namespace: pihole
