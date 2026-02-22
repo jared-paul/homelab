@@ -32,8 +32,8 @@ spec:
             - address=/argocd.cereal.box/192.168.0.200
             - address=/pihole.cereal.box/192.168.0.200
             - address=/kargo.cereal.box/192.168.0.200
-            - address=/hello.cereal.box/192.168.0.200
-            - address=/hello-staging.cereal.box/192.168.0.200
+            - address=/hello.cereal.box/192.168.0.201
+            - address=/hello-staging.cereal.box/192.168.0.201
             - address=/homepage.cereal.box/192.168.0.200
   destination:
     server: https://kubernetes.default.svc
