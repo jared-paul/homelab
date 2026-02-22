@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-creds
+    namespace: hello
+    labels:
+        kargo.akuity.io/cred-type: git
+data:
+    password: ENC[AES256_GCM,data:Rx5EwvRJIcRrZ1/po27+WuDEubHyWOzBe45hsq0VzfWc97HztAUUhHDBzD9H/5uY5bFag26gjHG87d18aDqEYNeDCYnPIqWdDCeJ4fEWEdV03rFiq0VVCw+acVZ9BlaO5c3ScH0QrfN7bhLaR+Y4nyNUX7F+PwikCswvDg==,iv:82qNrF1vy85Psf0UT0NUC5RsbZghHvvdwOZnp9ZAYDA=,tag:RQlt2OVL4/NvxM2JElK+SA==,type:str]
+    repoURL: ENC[AES256_GCM,data:d8ENCcfUrHZxauHVB2orHB4YGnHrVF6+/Ss0YRllKF6+PxJfXCGNoe8OcsL7kxkWb6hBpKmyAC4=,iv:nGLvCDspML4XEduvCEyAKGyp42XaFYl5c/lMBUrqnwg=,tag:3triCHS+I+ZSSJw3c91jrg==,type:str]
+    username: ENC[AES256_GCM,data:J4dDcc01aVcOa2PwwjZ4iw==,iv:FTTm2Wd0Gxt5Ubpot2jmNS2cOMB33pAUiPIHWolZPCY=,tag:uG/ByFD/Xp2QBAKpw8qskg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1fcwyru38qdxfnxutx3pd8g8l6nwz54qm3gpwqa66t87myhpksd4sh6hzzj
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBDOGJHZ2grNitIU2VrRE96
+            aVdOdkpGNFIzT2pveDBhb2dad1ZKMTNlVW0wCitxRXE2a2NVZUVnZ3A3U05lMWl2
+            NEdWaHVUT05PUzQrcUd0VGk4QXViQkEKLS0tIGQrVkRUQTFXNWd6MHBnMTlhbGhW
+            WHB0NUx0WjJhY0pxWFRoUFVSN1JtYTQKQAe8XWyCF3JY9pqXS7CbRG0NxxvNbzxc
+            SRkU9zTnWt4bWJkcQV8EMN2Z7c6+Qao+b0uaKAT3btxyq3bW6DCHJg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-02-22T22:41:16Z"
+    mac: ENC[AES256_GCM,data:cFQN+p9Iki7GhC6+nAYjFi/Tu6Dhj7mRxnyEXXvJYE8GeKnhfaFajRodOTepdnr8AmgZxglQJ2ofnd/qYwK0szfDZUtthQZVbm26LTPkxP+Kw1Rvx331FyeAsXR85oWXt43u3hrqetSZU7kLSkhMdfnxh1cSrcIVeyAAdSiU3ik=,iv:IfeVQ404LvjAvS4EOcuwgnLBZ4PWxRo8hRtQVbfLvzg=,tag:jhJo1xeRRhw8iGZp5pfieQ==,type:str]
+    pgp: []
+    encrypted_regex: ^data$
+    version: 3.9.4
