@@ -43,7 +43,7 @@ spec:
               mountPath: /usr/local/bin/sops
               subPath: sops
             - name: custom-tools
-              mountPath: /home/argocd/.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
+              mountPath: /usr/local/bin/ksops
               subPath: ksops
           initContainers:
             - name: install-ksops
