@@ -74,6 +74,10 @@ resource "proxmox_virtual_environment_vm" "cluster" {
   }
 
   initialization {
+    dns {
+      servers = ["1.1.1.1", "1.0.0.1"]
+    }
+
     ip_config {
       ipv4 {
         address = "${each.value.ip_address}/${var.cidr}"
