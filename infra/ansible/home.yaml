@@ -12,6 +12,11 @@
         path: /etc/hosts
         line: "127.0.1.1 {{ inventory_hostname }}"
 
+    - name: Create resolved.conf.d directory
+      ansible.builtin.file:
+        path: /etc/systemd/resolved.conf.d
+        state: directory
+
     - name: Disable systemd-resolved stub listener
       ansible.builtin.copy:
         content: |
