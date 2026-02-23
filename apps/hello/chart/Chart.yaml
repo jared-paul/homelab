@@ -2,3 +2,7 @@ apiVersion: v2
 name: hello
 description: Hello app deployment
 version: 0.1.0
+dependencies:
+  - name: postgresql
+    version: "16.x.x"
+    repository: https://charts.bitnami.com/bitnami

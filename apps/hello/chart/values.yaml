@@ -2,3 +2,13 @@ image:
   repository: ghcr.io/jared-paul/hello
   tag: latest
 host: hello.cereal.box
+postgresql:
+  auth:
+    database: hello
+    username: hello
+    existingSecret: ""
+    password: ""
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi

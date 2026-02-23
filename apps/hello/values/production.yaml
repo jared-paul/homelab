@@ -1,2 +1,5 @@
 image:
   tag: 1.4.0
+postgresql:
+  auth:
+    password: prod-hello-password
