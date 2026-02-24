@@ -2,3 +2,8 @@ image:
   repository: ghcr.io/jared-paul/hello
   tag: latest
 host: hello.cereal.box
+database:
+  enabled: false
+  name: hello-db
+  instances: 1
+  storage: 1Gi

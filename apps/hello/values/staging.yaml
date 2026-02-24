@@ -1,2 +1,6 @@
 image:
   tag: 1.4.0
+database:
+  enabled: true
+  instances: 1
+  storage: 1Gi
