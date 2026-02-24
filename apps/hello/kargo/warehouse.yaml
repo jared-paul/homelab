@@ -5,7 +5,7 @@ metadata:
   namespace: hello
 spec:
   freightCreationPolicy: Automatic
-  interval: 5m0s
+  interval: 30s
   subscriptions:
     - image:
         repoURL: ghcr.io/jared-paul/hello
